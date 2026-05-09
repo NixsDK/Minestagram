@@ -21,15 +21,16 @@ struct AlbumPhoto: Codable, Identifiable, Hashable {
         case thumbnailUrl = "thumbnailUrl"
     }
 
-    /// JSONPlaceholder still points at `via.placeholder.com`, which often fails on iOS (blocked, empty body, or TLS quirks).
-    /// These Unsplash photos are military / aviation themed and load reliably over HTTPS.
+    /// JSONPlaceholder image URLs often fail on iOS. These Unsplash IDs are rotated for a military / tactical / aviation theme (profile grid + Photos tab).
     private static let militaryUnsplashPhotoIDs = [
-        "1520106212299-d99c443e4568",
-        "1504384308090-c894fdcc538d",
-        "1588669636305-95af05eb51a1",
-        "1545558014-8692077e9b5c",
-        "1579910395959-15d91a1dc806",
-        "1440098334710-ce400b492f4f"
+        "1520106212299-d99c443e4568", // carrier deck / jets
+        "1544196958-34229ee680c0", // training / drill
+        "1519006112096-9051bfafc377", // helicopter
+        "1628177897482-3a0c0f04e709", // tactical / vehicle
+        "1588669636305-95af05eb51a1", // jet cockpit / aviation
+        "1509042239860-f550ce710b93", // field / ops mood
+        "1518709268805-72e911f0b6f4", // arid / deployment landscape
+        "1631627867058-0b8a05f97b8d" // uniform / personnel
     ]
 
     private static func unsplashSquareURL(photoID: String, size: Int) -> URL {

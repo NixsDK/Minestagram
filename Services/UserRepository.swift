@@ -31,10 +31,9 @@ struct UserRepository: UserRepositoryProtocol {
         }
         var user = try JSONDecoder().decode(User.self, from: data)
         if user.id == 1 {
-            // Direct image URL only (raw .jpg/.png). The Pinterest *ideas* page does NOT work here:
-            // https://www.pinterest.com/ideas/call-of-duty-ghost-profile-picture/916276501753/
-            // From a pin, use “Copy image address” (often https://i.pinimg.com/...).
-            user.avatarURL = "https://static.wikia.nocookie.net/callofduty/images/8/8e/Ghost_Infobox_MW2022.png/revision/latest/scale-to-width-down/400"
+            user.name = "Simon Riley"
+            user.company = nil
+            user.avatarURL = "https://wallpapers.com/images/high/ghost-skull-soldier-avatar-pey1ocsnnnv3z7wm.webp"
             user.bundledAvatarAssetName = nil
             user.bio = """
             Ghost – "Two goldfish are in a tank…?"
