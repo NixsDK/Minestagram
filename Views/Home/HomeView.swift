@@ -65,7 +65,7 @@ struct HomeView: View {
         Button {
             selectedPhoto = photo
         } label: {
-            AsyncImage(url: URL(string: photo.thumbnailUrl)) { phase in
+            AsyncImage(url: photo.reliableThumbnailURL) { phase in
                 switch phase {
                 case .empty:
                     ZStack {

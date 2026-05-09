@@ -44,7 +44,7 @@ final class PhotosViewModel: ObservableObject {
                     id: photo.id,
                     username: user.name ?? "User \(user.id)",
                     avatarURL: avatar,
-                    remoteImageURL: URL(string: photo.url)!,
+                    remoteImageURL: photo.reliableImageURL,
                     localImageURL: nil
                 )
             }

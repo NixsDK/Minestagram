@@ -11,7 +11,7 @@ struct GridPhotoDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                AsyncImage(url: URL(string: photo.url)) { phase in
+                AsyncImage(url: photo.reliableImageURL) { phase in
                     switch phase {
                     case .empty:
                         ProgressView()
