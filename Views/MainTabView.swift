@@ -8,6 +8,7 @@ import SwiftUI
 struct MainTabView: View {
     @StateObject private var tabController = TabController()
     @EnvironmentObject private var remoteConfigViewModel: RemoteConfigViewModel
+    @AppStorage(MinestagramTheme.darkModeStorageKey) private var useDarkMode = false
 
     var body: some View {
         TabView(selection: $tabController.selectedTab) {
@@ -44,6 +45,7 @@ struct MainTabView: View {
             .tag(AppTab.map)
         }
         .tint(MinestagramTheme.accentGold)
+        .preferredColorScheme(useDarkMode ? .dark : .light)
         .task {
             await remoteConfigViewModel.refreshWhatsNewFlag()
         }
