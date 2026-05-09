@@ -108,13 +108,16 @@ final class PhotosViewModel: ObservableObject {
             cachingProgress = (posts.count, posts.count)
         }
 
-        for index in posts.indices {
-            cachingProgress = (index, posts.count)
+        var working = posts
+        for index in working.indices {
+            cachingProgress = (index, working.count)
+            let remoteURL = working[index].remoteImageURL
             do {
-                let local = try await imageCache.cachedFileURL(for: posts[index].remoteImageURL)
-                posts[index].localImageURL = local
+                let local = try await imageCache.cachedFileURL(for: remoteURL)
+                working[index].localImageURL = local
+                posts = working
             } catch {
-                if posts[index].localImageURL == nil {
+                if working[index].localImageURL == nil {
                     errorMessage = error.localizedDescription
                 }
             }
@@ -129,7 +132,6 @@ final class PhotosViewModel: ObservableObject {
         }
         let metaDir = documents.appendingPathComponent("MinestagramPostsMeta", isDirectory: true)
         try? fileManager.createDirectory(at: metaDir, withIntermediateDirectories: true)
-        let relative = "MinestagramImageCache"
         let dtos: [PhotoPostDTO] = posts.map { post in
             let rel: String?
             if let local = post.localImageURL,
