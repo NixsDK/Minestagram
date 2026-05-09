@@ -33,6 +33,7 @@ struct PhotoPostDetailView: View {
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
         .minestagramNavigationChrome()
+        .minestagramThemeToolbar()
     }
 
     @ViewBuilder
@@ -96,4 +97,5 @@ struct PhotoPostDetailView: View {
             )
         )
     }
+    .environmentObject(ThemeController())
 }

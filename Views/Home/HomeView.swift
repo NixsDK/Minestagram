@@ -30,6 +30,7 @@ struct HomeView: View {
         .navigationTitle("Minestagram")
         .navigationBarTitleDisplayMode(.large)
         .minestagramNavigationChrome()
+        .minestagramThemeToolbar()
         .task {
             await viewModel.load()
         }
@@ -69,28 +70,31 @@ struct HomeView: View {
         Button {
             selectedPhoto = photo
         } label: {
-            // Square tiles: equal column width from `GridItem.flexible`, 1:1 aspect, clip overflow.
-            AsyncImage(url: photo.reliableThumbnailURL) { phase in
-                switch phase {
-                case .empty:
-                    ZStack {
-                        Color(.secondarySystemFill)
-                        ProgressView()
+            // Reserve a square using `.fit`, then fill it — avoids LazyVGrid overlap from `aspectRatio(..., .fill)`.
+            Color.clear
+                .aspectRatio(1, contentMode: .fit)
+                .overlay {
+                    AsyncImage(url: photo.reliableThumbnailURL) { phase in
+                        switch phase {
+                        case .empty:
+                            ZStack {
+                                Color(.secondarySystemFill)
+                                ProgressView()
+                            }
+                        case let .success(image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        case .failure:
+                            Image(systemName: "photo")
+                                .foregroundStyle(.secondary)
+                        @unknown default:
+                            EmptyView()
+                        }
                     }
-                case let .success(image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                case .failure:
-                    Image(systemName: "photo")
-                        .foregroundStyle(.secondary)
-                @unknown default:
-                    EmptyView()
                 }
-            }
-            .frame(maxWidth: .infinity)
-            .aspectRatio(1, contentMode: .fill)
-            .clipped()
+                .clipShape(Rectangle())
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(photo.title ?? "Photo"))
@@ -101,4 +105,5 @@ struct HomeView: View {
     NavigationStack {
         HomeView()
     }
+    .environmentObject(ThemeController())
 }

@@ -32,3 +32,27 @@ extension View {
         modifier(MinestagramNavigationChrome())
     }
 }
+
+struct MinestagramThemeToolbar: ViewModifier {
+    @EnvironmentObject private var themeController: ThemeController
+
+    func body(content: Content) -> some View {
+        content.toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    themeController.toggle()
+                } label: {
+                    Image(systemName: themeController.useDarkMode ? "sun.max.fill" : "moon.fill")
+                        .symbolRenderingMode(.hierarchical)
+                }
+                .accessibilityLabel(themeController.useDarkMode ? "Use light appearance" : "Use dark appearance")
+            }
+        }
+    }
+}
+
+extension View {
+    func minestagramThemeToolbar() -> some View {
+        modifier(MinestagramThemeToolbar())
+    }
+}

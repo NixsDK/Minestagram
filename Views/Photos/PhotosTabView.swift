@@ -29,11 +29,12 @@ struct PhotosTabView: View {
                             }
                             .buttonStyle(.plain)
                             .disabled(post.localImageURL == nil)
-                            .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0))
+                            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                             .listRowSeparator(.hidden)
                         }
                     }
                     .listStyle(.plain)
+                    .listRowSpacing(12)
                 }
             }
 
@@ -44,6 +45,7 @@ struct PhotosTabView: View {
         .navigationTitle("Photos")
         .navigationBarTitleDisplayMode(.large)
         .minestagramNavigationChrome()
+        .minestagramThemeToolbar()
         .navigationDestination(item: $selectedPost) { post in
             PhotoPostDetailView(post: post)
         }
@@ -81,4 +83,5 @@ struct PhotosTabView: View {
     NavigationStack {
         PhotosTabView()
     }
+    .environmentObject(ThemeController())
 }

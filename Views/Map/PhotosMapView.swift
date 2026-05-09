@@ -58,6 +58,7 @@ struct PhotosMapView: View {
         .navigationTitle("Map")
         .navigationBarTitleDisplayMode(.large)
         .minestagramNavigationChrome()
+        .minestagramThemeToolbar()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -93,4 +94,5 @@ struct PhotosMapView: View {
     NavigationStack {
         PhotosMapView()
     }
+    .environmentObject(ThemeController())
 }

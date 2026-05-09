@@ -22,6 +22,7 @@ struct VideosTabView: View {
         .navigationTitle("Videos")
         .navigationBarTitleDisplayMode(.large)
         .minestagramNavigationChrome()
+        .minestagramThemeToolbar()
         .onAppear {
             viewModel.load()
         }
@@ -81,4 +82,5 @@ struct VideosTabView: View {
     NavigationStack {
         VideosTabView()
     }
+    .environmentObject(ThemeController())
 }

@@ -42,12 +42,12 @@ struct GridPhotoDetailView: View {
         .navigationTitle("Photo")
         .navigationBarTitleDisplayMode(.inline)
         .minestagramNavigationChrome()
+        .minestagramThemeToolbar()
     }
 }
 
 #Preview {
     NavigationStack {
-        // Preview only: decoded `url` / `thumbnailUrl` strings are unused at runtime — the view loads `reliableImageURL`.
         GridPhotoDetailView(
             photo: AlbumPhoto(
                 albumId: 1,
@@ -58,4 +58,5 @@ struct GridPhotoDetailView: View {
             )
         )
     }
+    .environmentObject(ThemeController())
 }

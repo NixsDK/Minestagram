@@ -17,6 +17,7 @@ struct DiskImageView: View {
             if let image {
                 Image(uiImage: image)
                     .resizable()
+                    .scaledToFill()
             } else {
                 ZStack {
                     Color(.secondarySystemFill)

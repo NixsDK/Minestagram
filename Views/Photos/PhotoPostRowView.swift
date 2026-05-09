@@ -64,9 +64,14 @@ struct PhotoPostRowView: View {
 
     @ViewBuilder
     private var photoArea: some View {
-        photoContent
+        Color.clear
+            .aspectRatio(4 / 3, contentMode: .fit)
             .frame(maxWidth: .infinity)
-            .aspectRatio(4 / 3, contentMode: .fill)
+            .overlay {
+                photoContent
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .clipped()
+            }
             .clipped()
     }
 
@@ -74,7 +79,6 @@ struct PhotoPostRowView: View {
     private var photoContent: some View {
         if let local = post.localImageURL {
             DiskImageView(url: local)
-                .scaledToFill()
         } else {
             AsyncImage(url: post.remoteImageURL) { phase in
                 switch phase {
