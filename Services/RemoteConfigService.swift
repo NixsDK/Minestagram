@@ -4,9 +4,9 @@
 //
 
 import Foundation
-import FirebaseRemoteConfig
+@preconcurrency import FirebaseRemoteConfig
 
-protocol RemoteConfigServiceProtocol: Sendable {
+protocol RemoteConfigServiceProtocol {
     func fetchAndActivateShowWhatsNew() async throws -> Bool
 }
 

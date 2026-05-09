@@ -47,7 +47,7 @@ actor ImageCacheService {
     /// Downloads and writes to disk when missing; returns local file URL.
     func cachedFileURL(for remote: URL) async throws -> URL {
         ensureCacheDirectory()
-        let destination = fileURL(forRemote: remote)
+        let destination = fileURL(forRemoteURL: remote)
         if fileManager.fileExists(atPath: destination.path) {
             return destination
         }
