@@ -37,13 +37,13 @@ final class PhotosViewModel: ObservableObject {
             let user = try await userRepository.fetchUser(id: 1)
             let album = try await albumRepository.fetchAlbumPhotos(albumId: 1)
             let slice = Array(album.prefix(20))
-            let avatar = user.avatarURL.flatMap { URL(string: $0) }
 
             var built: [PhotoPost] = slice.map { photo in
                 PhotoPost(
                     id: photo.id,
                     username: user.name ?? "User \(user.id)",
-                    avatarURL: avatar,
+                    avatarURL: user.bundledAvatarAssetName == nil ? user.avatarURL.flatMap { URL(string: $0) } : nil,
+                    avatarAssetName: user.bundledAvatarAssetName,
                     remoteImageURL: photo.reliableImageURL,
                     localImageURL: nil
                 )
@@ -85,6 +85,7 @@ final class PhotosViewModel: ObservableObject {
                 id: dto.id,
                 username: dto.username,
                 avatarURL: dto.avatarURLString.flatMap { URL(string: $0) },
+                avatarAssetName: dto.avatarAssetName,
                 remoteImageURL: URL(string: dto.remoteImageURLString)!,
                 localImageURL: local
             )
@@ -146,6 +147,7 @@ final class PhotosViewModel: ObservableObject {
                 id: post.id,
                 username: post.username,
                 avatarURLString: post.avatarURL?.absoluteString,
+                avatarAssetName: post.avatarAssetName,
                 remoteImageURLString: post.remoteImageURL.absoluteString,
                 localRelativePath: rel
             )
@@ -161,6 +163,7 @@ private struct PhotoPostDTO: Codable {
     let id: Int
     let username: String
     let avatarURLString: String?
+    let avatarAssetName: String?
     let remoteImageURLString: String
     let localRelativePath: String?
 }

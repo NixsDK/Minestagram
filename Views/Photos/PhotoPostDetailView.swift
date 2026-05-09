@@ -89,6 +89,7 @@ struct PhotoPostDetailView: View {
                 id: 1,
                 username: "You",
                 avatarURL: nil,
+                avatarAssetName: nil,
                 remoteImageURL: URL(string: "https://example.com")!,
                 localImageURL: nil
             )

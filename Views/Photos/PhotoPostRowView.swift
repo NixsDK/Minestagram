@@ -29,7 +29,11 @@ struct PhotoPostRowView: View {
     @ViewBuilder
     private var avatar: some View {
         Group {
-            if let avatarURL = post.avatarURL {
+            if let assetName = post.avatarAssetName {
+                Image(assetName)
+                    .resizable()
+                    .scaledToFill()
+            } else if let avatarURL = post.avatarURL {
                 AsyncImage(url: avatarURL) { phase in
                     switch phase {
                     case .empty:
@@ -109,6 +113,7 @@ struct PhotoPostRowView: View {
                 id: 1,
                 username: "Tester",
                 avatarURL: URL(string: "https://i.pravatar.cc/100"),
+                avatarAssetName: nil,
                 remoteImageURL: URL(string: "https://example.com/x.jpg")!,
                 localImageURL: nil
             )

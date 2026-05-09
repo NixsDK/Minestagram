@@ -38,7 +38,11 @@ struct ProfileHeaderView: View {
     @ViewBuilder
     private var avatar: some View {
         Group {
-            if let urlString = user.avatarURL, let url = URL(string: urlString) {
+            if let assetName = user.bundledAvatarAssetName {
+                Image(assetName)
+                    .resizable()
+                    .scaledToFill()
+            } else if let urlString = user.avatarURL, let url = URL(string: urlString) {
                 AsyncImage(url: url) { phase in
                     switch phase {
                     case .empty:
@@ -78,6 +82,7 @@ struct ProfileHeaderView: View {
         user: User(
             id: 1,
             avatarURL: nil,
+            bundledAvatarAssetName: nil,
             name: "Sample User",
             company: "Acme",
             bio: "Building Minestagram."

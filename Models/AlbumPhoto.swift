@@ -22,12 +22,27 @@ struct AlbumPhoto: Codable, Identifiable, Hashable {
     }
 
     /// JSONPlaceholder still points at `via.placeholder.com`, which often fails on iOS (blocked, empty body, or TLS quirks).
-    /// Picsum URLs are deterministic per `id` and load reliably in `AsyncImage` and `URLSession`.
+    /// These Unsplash photos are military / aviation themed and load reliably over HTTPS.
+    private static let militaryUnsplashPhotoIDs = [
+        "1520106212299-d99c443e4568",
+        "1504384308090-c894fdcc538d",
+        "1588669636305-95af05eb51a1",
+        "1545558014-8692077e9b5c",
+        "1579910395959-15d91a1dc806",
+        "1440098334710-ce400b492f4f"
+    ]
+
+    private static func unsplashSquareURL(photoID: String, size: Int) -> URL {
+        URL(string: "https://images.unsplash.com/photo-\(photoID)?w=\(size)&h=\(size)&fit=crop&q=85")!
+    }
+
     var reliableImageURL: URL {
-        URL(string: "https://picsum.photos/seed/minestagram-\(id)/900/900")!
+        let photoID = Self.militaryUnsplashPhotoIDs[abs(id) % Self.militaryUnsplashPhotoIDs.count]
+        return Self.unsplashSquareURL(photoID: photoID, size: 900)
     }
 
     var reliableThumbnailURL: URL {
-        URL(string: "https://picsum.photos/seed/minestagram-thumb-\(id)/300/300")!
+        let photoID = Self.militaryUnsplashPhotoIDs[abs(id) % Self.militaryUnsplashPhotoIDs.count]
+        return Self.unsplashSquareURL(photoID: photoID, size: 320)
     }
 }
