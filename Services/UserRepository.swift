@@ -13,6 +13,9 @@ struct UserRepository: UserRepositoryProtocol {
     private let session: URLSession
     private let baseURL: URL
 
+    /// Direct image URL (must point at image bytes, not a Pinterest gallery page). Replace with your own link from “Copy image address”.
+    private static let ghostProfileImageURL = "https://static.wikia.nocookie.net/callofduty/images/8/8e/Ghost_Infobox_MW2022.png/revision/latest/scale-to-width-down/400"
+
     init(
         session: URLSession = .shared,
         baseURL: URL = URL(string: "https://jsonplaceholder.typicode.com")!
@@ -31,8 +34,7 @@ struct UserRepository: UserRepositoryProtocol {
         }
         var user = try JSONDecoder().decode(User.self, from: data)
         if user.id == 1 {
-            // Theme: Simon "Ghost" Riley — Cod Fandom CDN works with AsyncImage over HTTPS.
-            user.avatarURL = "https://static.wikia.nocookie.net/callofduty/images/0/0f/Ghost_In_Game_Model_MWII.jpeg/revision/latest/scale-to-width-down/400"
+            user.avatarURL = Self.ghostProfileImageURL
             user.bio = """
             Ghost – "Two goldfish are in a tank…?"
             Soap – "Go on…"
