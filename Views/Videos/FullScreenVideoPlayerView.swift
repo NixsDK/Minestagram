@@ -3,6 +3,7 @@
 //  Minestagram
 //
 
+import AVFoundation
 import AVKit
 import SwiftUI
 
@@ -37,13 +38,17 @@ struct FullScreenVideoPlayerView: View {
             .accessibilityLabel(Text("Close"))
         }
         .onAppear {
-            player = AVPlayer(url: item.streamURL)
-            player?.play()
+            try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback)
+            try? AVAudioSession.sharedInstance().setActive(true)
+            let newPlayer = AVPlayer(url: item.streamURL)
+            player = newPlayer
+            newPlayer.play()
         }
         .onDisappear {
             player?.pause()
             player?.replaceCurrentItem(with: nil)
             player = nil
+            try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         }
     }
 }

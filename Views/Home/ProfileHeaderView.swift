@@ -29,6 +29,8 @@ struct ProfileHeaderView: View {
                 Text(bio)
                     .font(.body)
                     .foregroundStyle(.primary)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }

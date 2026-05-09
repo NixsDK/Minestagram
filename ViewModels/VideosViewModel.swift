@@ -10,18 +10,19 @@ final class VideosViewModel: ObservableObject {
     @Published private(set) var items: [VideoItem] = []
 
     func load() {
+        // Mix of Apple HLS + smaller MP4s — simulates reliably; old GTV bucket clips sometimes stall on iOS.
         items = [
             VideoItem(
-                title: "Big Buck Bunny (clip)",
-                streamURL: URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!
+                title: "Apple sample stream (HLS)",
+                streamURL: URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8")!
             ),
             VideoItem(
-                title: "Elephant Dream",
-                streamURL: URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4")!
+                title: "Big Buck Bunny (short MP4)",
+                streamURL: URL(string: "https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4")!
             ),
             VideoItem(
-                title: "For Bigger Blazes",
-                streamURL: URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")!
+                title: "Google sample — Subtitles",
+                streamURL: URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4")!
             )
         ]
     }
