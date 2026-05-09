@@ -19,15 +19,19 @@ struct PhotosTabView: View {
                         description: Text(viewModel.errorMessage ?? "")
                     )
                 } else {
-                    List(viewModel.posts) { post in
-                        Button {
-                            guard post.localImageURL != nil else { return }
-                            selectedPost = post
-                        } label: {
-                            PhotoPostRowView(post: post)
+                    List {
+                        ForEach(viewModel.posts) { post in
+                            Button {
+                                guard post.localImageURL != nil else { return }
+                                selectedPost = post
+                            } label: {
+                                PhotoPostRowView(post: post)
+                            }
+                            .buttonStyle(.plain)
+                            .disabled(post.localImageURL == nil)
+                            .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0))
+                            .listRowSeparator(.hidden)
                         }
-                        .buttonStyle(.plain)
-                        .disabled(post.localImageURL == nil)
                     }
                     .listStyle(.plain)
                 }
@@ -38,7 +42,8 @@ struct PhotosTabView: View {
             }
         }
         .navigationTitle("Photos")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .minestagramNavigationChrome()
         .navigationDestination(item: $selectedPost) { post in
             PhotoPostDetailView(post: post)
         }

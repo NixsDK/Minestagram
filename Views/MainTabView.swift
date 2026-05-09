@@ -43,7 +43,7 @@ struct MainTabView: View {
             }
             .tag(AppTab.map)
         }
-        .tint(.primary)
+        .tint(MinestagramTheme.accentGold)
         .task {
             await remoteConfigViewModel.refreshWhatsNewFlag()
         }

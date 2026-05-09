@@ -16,7 +16,7 @@ struct PhotosMapView: View {
         Map(selection: $mapSelection) {
             ForEach(viewModel.annotations) { pin in
                 Marker(pin.title, coordinate: pin.coordinate)
-                    .tint(.orange)
+                    .tint(MinestagramTheme.accentGold)
                     .tag(pin.id)
             }
             UserAnnotation()
@@ -56,7 +56,8 @@ struct PhotosMapView: View {
             Text("Uses maps:// with your destination coordinates.")
         }
         .navigationTitle("Map")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .minestagramNavigationChrome()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {

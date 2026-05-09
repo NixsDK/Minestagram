@@ -9,7 +9,7 @@ struct PhotoPostRowView: View {
     let post: PhotoPost
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 10) {
                 avatar
                 Text(post.username)
@@ -17,11 +17,9 @@ struct PhotoPostRowView: View {
                     .foregroundStyle(.primary)
                 Spacer(minLength: 0)
             }
+            .padding(.horizontal, 16)
 
-            photoContent
-                .frame(maxWidth: .infinity)
-                .aspectRatio(4 / 3, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            photoArea
         }
         .padding(.vertical, 6)
     }
@@ -62,6 +60,14 @@ struct PhotoPostRowView: View {
             .resizable()
             .scaledToFit()
             .foregroundStyle(.secondary)
+    }
+
+    @ViewBuilder
+    private var photoArea: some View {
+        photoContent
+            .frame(maxWidth: .infinity)
+            .aspectRatio(4 / 3, contentMode: .fill)
+            .clipped()
     }
 
     @ViewBuilder

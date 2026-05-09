@@ -20,7 +20,8 @@ struct VideosTabView: View {
         }
         .background(Color(.systemGroupedBackground))
         .navigationTitle("Videos")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .minestagramNavigationChrome()
         .onAppear {
             viewModel.load()
         }
@@ -36,16 +37,15 @@ struct VideosTabView: View {
         Button {
             activeVideo = item
         } label: {
-            HStack(spacing: 14) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color(.secondarySystemGroupedBackground))
-                    Image(systemName: "play.circle.fill")
-                        .font(.system(size: 36))
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundStyle(.primary)
-                }
-                .frame(width: 88, height: 62)
+            HStack(spacing: 0) {
+                RoundedRectangle(cornerRadius: 2, style: .continuous)
+                    .fill(MinestagramTheme.brandYellow)
+                    .frame(width: 5)
+
+                Image(systemName: "play.circle.fill")
+                    .font(.system(size: 40))
+                    .foregroundStyle(MinestagramTheme.brandYellow)
+                    .padding(.leading, 14)
 
                 VStack(alignment: .leading, spacing: 6) {
                     Text(item.title)
@@ -56,17 +56,21 @@ struct VideosTabView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
+                .padding(.leading, 12)
+
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.right")
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(.tertiary)
+                    .padding(.trailing, 4)
             }
-            .padding()
+            .padding(.vertical, 14)
+            .padding(.trailing, 12)
             .background(Color(.secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .strokeBorder(Color(.separator), lineWidth: 0.5)
+                    .strokeBorder(Color(.separator).opacity(0.35), lineWidth: 0.5)
             }
         }
         .buttonStyle(.plain)

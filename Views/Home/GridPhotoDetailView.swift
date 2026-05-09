@@ -41,6 +41,7 @@ struct GridPhotoDetailView: View {
         .background(Color(.systemBackground))
         .navigationTitle("Photo")
         .navigationBarTitleDisplayMode(.inline)
+        .minestagramNavigationChrome()
     }
 }
 

@@ -32,6 +32,7 @@ struct PhotoPostDetailView: View {
         .background(Color(.systemBackground))
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
+        .minestagramNavigationChrome()
     }
 
     @ViewBuilder

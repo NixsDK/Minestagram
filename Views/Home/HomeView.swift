@@ -9,11 +9,14 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     @State private var selectedPhoto: AlbumPhoto?
 
-    private let gridColumns = [
-        GridItem(.flexible(), spacing: 4),
-        GridItem(.flexible(), spacing: 4),
-        GridItem(.flexible(), spacing: 4)
-    ]
+    private let gridSpacing = MinestagramTheme.gridSpacing
+    private var gridColumns: [GridItem] {
+        [
+            GridItem(.flexible(), spacing: gridSpacing),
+            GridItem(.flexible(), spacing: gridSpacing),
+            GridItem(.flexible(), spacing: gridSpacing)
+        ]
+    }
 
     var body: some View {
         ScrollView {
@@ -25,7 +28,8 @@ struct HomeView: View {
         }
         .background(Color(.systemBackground))
         .navigationTitle("Minestagram")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .minestagramNavigationChrome()
         .task {
             await viewModel.load()
         }
@@ -52,12 +56,12 @@ struct HomeView: View {
 
     @ViewBuilder
     private var photoGridSection: some View {
-        LazyVGrid(columns: gridColumns, spacing: 4) {
+        LazyVGrid(columns: gridColumns, spacing: gridSpacing) {
             ForEach(viewModel.photos) { photo in
                 gridCell(for: photo)
             }
         }
-        .padding(.horizontal, 4)
+        .padding(.horizontal, gridSpacing)
     }
 
     @ViewBuilder
@@ -65,7 +69,7 @@ struct HomeView: View {
         Button {
             selectedPhoto = photo
         } label: {
-            // Use reliable* URLs only — `photo.url` / `thumbnailUrl` from JSONPlaceholder use via.placeholder.com and often fail on iOS.
+            // Square tiles: equal column width from `GridItem.flexible`, 1:1 aspect, clip overflow.
             AsyncImage(url: photo.reliableThumbnailURL) { phase in
                 switch phase {
                 case .empty:
@@ -84,9 +88,9 @@ struct HomeView: View {
                     EmptyView()
                 }
             }
-            .frame(minHeight: 110)
-            .clipped()
+            .frame(maxWidth: .infinity)
             .aspectRatio(1, contentMode: .fill)
+            .clipped()
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(photo.title ?? "Photo"))
