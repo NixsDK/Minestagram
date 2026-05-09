@@ -82,5 +82,4 @@ struct VideosTabView: View {
     NavigationStack {
         VideosTabView()
     }
-    .environmentObject(ThemeController())
 }

@@ -97,5 +97,4 @@ struct PhotoPostDetailView: View {
             )
         )
     }
-    .environmentObject(ThemeController())
 }

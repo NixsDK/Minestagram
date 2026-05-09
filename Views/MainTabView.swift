@@ -58,5 +58,4 @@ struct MainTabView: View {
 #Preview {
     MainTabView()
         .environmentObject(RemoteConfigViewModel(service: MockRemoteConfigService()))
-        .environmentObject(ThemeController())
 }

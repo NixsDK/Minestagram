@@ -94,5 +94,4 @@ struct PhotosMapView: View {
     NavigationStack {
         PhotosMapView()
     }
-    .environmentObject(ThemeController())
 }

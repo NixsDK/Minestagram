@@ -105,5 +105,4 @@ struct HomeView: View {
     NavigationStack {
         HomeView()
     }
-    .environmentObject(ThemeController())
 }

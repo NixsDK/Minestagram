@@ -14,6 +14,9 @@ enum MinestagramTheme {
     static let accentGold = Color(red: 0.72, green: 0.52, blue: 0.0)
 
     static let gridSpacing: CGFloat = 3
+
+    /// Same key as previously used by `ThemeController` — keep so saved choice persists.
+    static let darkModeStorageKey = "MinestagramUseDarkMode"
 }
 
 struct MinestagramNavigationChrome: ViewModifier {
@@ -34,18 +37,17 @@ extension View {
 }
 
 struct MinestagramThemeToolbar: ViewModifier {
-    @EnvironmentObject private var themeController: ThemeController
+    @AppStorage(MinestagramTheme.darkModeStorageKey) private var useDarkMode = false
 
     func body(content: Content) -> some View {
         content.toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    themeController.toggle()
+                    useDarkMode.toggle()
                 } label: {
-                    Image(systemName: themeController.useDarkMode ? "sun.max.fill" : "moon.fill")
-                        .symbolRenderingMode(.hierarchical)
+                    Image(systemName: useDarkMode ? "sun.max.fill" : "moon.fill")
                 }
-                .accessibilityLabel(themeController.useDarkMode ? "Use light appearance" : "Use dark appearance")
+                .accessibilityLabel(useDarkMode ? "Use light appearance" : "Use dark appearance")
             }
         }
     }

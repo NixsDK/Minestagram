@@ -58,5 +58,4 @@ struct GridPhotoDetailView: View {
             )
         )
     }
-    .environmentObject(ThemeController())
 }

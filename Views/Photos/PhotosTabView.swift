@@ -83,5 +83,4 @@ struct PhotosTabView: View {
     NavigationStack {
         PhotosTabView()
     }
-    .environmentObject(ThemeController())
 }
