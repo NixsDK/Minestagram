@@ -8,6 +8,7 @@ import FirebaseCore
 
 @main
 struct MinestagramApp: App {
+    private let persistenceController = PersistenceController.shared
     @StateObject private var remoteConfigViewModel = RemoteConfigViewModel()
 
     init() {
@@ -16,7 +17,8 @@ struct MinestagramApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            ContentView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(remoteConfigViewModel)
         }
     }
