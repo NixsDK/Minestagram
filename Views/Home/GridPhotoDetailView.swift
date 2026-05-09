@@ -11,6 +11,7 @@ struct GridPhotoDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
+                // Do not use `URL(string: photo.url)` — JSONPlaceholder hosts break on iOS; use `reliableImageURL`.
                 AsyncImage(url: photo.reliableImageURL) { phase in
                     switch phase {
                     case .empty:
@@ -45,13 +46,14 @@ struct GridPhotoDetailView: View {
 
 #Preview {
     NavigationStack {
+        // Preview only: decoded `url` / `thumbnailUrl` strings are unused at runtime — the view loads `reliableImageURL`.
         GridPhotoDetailView(
             photo: AlbumPhoto(
                 albumId: 1,
                 id: 1,
                 title: "Sample",
-                url: "https://via.placeholder.com/600",
-                thumbnailUrl: "https://via.placeholder.com/150"
+                url: "-",
+                thumbnailUrl: "-"
             )
         )
     }

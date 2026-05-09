@@ -6,6 +6,7 @@
 import Foundation
 
 /// JSONPlaceholder album photo (grid + list source).
+/// **UI must use** `reliableImageURL` / `reliableThumbnailURL` for loading — not `url` / `thumbnailUrl`.
 struct AlbumPhoto: Codable, Identifiable, Hashable {
     let albumId: Int
     let id: Int
@@ -30,11 +31,13 @@ struct AlbumPhoto: Codable, Identifiable, Hashable {
         "1588669636305-95af05eb51a1", // jet cockpit / aviation
         "1509042239860-f550ce710b93", // field / ops mood
         "1518709268805-72e911f0b6f4", // arid / deployment landscape
-        "1631627867058-0b8a05f97b8d" // uniform / personnel
+        "1520106212299-d99c443e4568" // second slot from set for extra variation without risky IDs
     ]
 
     private static func unsplashSquareURL(photoID: String, size: Int) -> URL {
-        URL(string: "https://images.unsplash.com/photo-\(photoID)?w=\(size)&h=\(size)&fit=crop&q=85")!
+        // `auto=format` helps URLSession / AsyncImage on iOS; avoid relying on JSONPlaceholder `url` / `thumbnailUrl`.
+        let s = "https://images.unsplash.com/photo-\(photoID)?auto=format&w=\(size)&h=\(size)&fit=crop&q=85"
+        return URL(string: s)!
     }
 
     var reliableImageURL: URL {

@@ -65,6 +65,7 @@ struct HomeView: View {
         Button {
             selectedPhoto = photo
         } label: {
+            // Use reliable* URLs only — `photo.url` / `thumbnailUrl` from JSONPlaceholder use via.placeholder.com and often fail on iOS.
             AsyncImage(url: photo.reliableThumbnailURL) { phase in
                 switch phase {
                 case .empty:
