@@ -66,13 +66,36 @@ struct PhotoPostRowView: View {
             DiskImageView(url: local)
                 .scaledToFill()
         } else {
-            ZStack {
-                Color(.tertiarySystemFill)
-                VStack(spacing: 6) {
-                    ProgressView()
-                    Text("Waiting for cache…")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+            AsyncImage(url: post.remoteImageURL) { phase in
+                switch phase {
+                case .empty:
+                    ZStack {
+                        Color(.tertiarySystemFill)
+                        VStack(spacing: 6) {
+                            ProgressView()
+                            Text("Loading…")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                case let .success(image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                case .failure:
+                    ZStack {
+                        Color(.tertiarySystemFill)
+                        VStack(spacing: 6) {
+                            Image(systemName: "wifi.exclamationmark")
+                                .imageScale(.large)
+                                .foregroundStyle(.secondary)
+                            Text("Could not load image")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                @unknown default:
+                    Color(.tertiarySystemFill)
                 }
             }
         }
