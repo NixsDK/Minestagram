@@ -2,23 +2,6 @@
 //  AlbumPhoto.swift
 //  Minestagram
 //
-//  WHERE TO GET IMAGE URLS (paste into `militaryImageURLStrings` below)
-//  --------------------------------------------------------------------
-//  You need **direct** links: opening the URL in a browser should show *only* the image (or start a download).
-//
-//  • Unsplash — https://unsplash.com/s/photos/military
-//    Open a photo → right‑click the big image → **Open Image in New Tab** → copy the address bar
-//    (starts with `https://images.unsplash.com/photo-...`).
-//
-//  • Pexels — https://www.pexels.com/search/military/
-//    Open a photo → **Free download** (or right‑click image → **Copy image address**).
-//
-//  • Pixabay — https://pixabay.com/images/search/military/
-//    Similar: use the actual image file URL, not the gallery page.
-//
-//  Avoid Pinterest *idea* pages, Google Images search pages, etc. — those are HTML, not image files.
-//  Add one `"...",` line per image; the app cycles by JSONPlaceholder photo `id`.
-//
 
 import Foundation
 
@@ -41,12 +24,16 @@ struct AlbumPhoto: Codable, Identifiable, Hashable {
 
     /// Replace / extend these with your own direct image URLs (see file comment at top).
     private static let militaryImageURLStrings: [String] = [
-        "https://images.unsplash.com/photo-1520106212299-d99c443e4568?fm=jpg&w=900&h=900&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1544196958-34229ee680c0?fm=jpg&w=900&h=900&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1519006112096-9051bfafc377?fm=jpg&w=900&h=900&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1628177897482-3a0c0f04e709?fm=jpg&w=900&h=900&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1588669636305-95af05eb51a1?fm=jpg&w=900&h=900&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1509042239860-f550ce710b93?fm=jpg&w=900&h=900&fit=crop&q=80"
+        "https://images.unsplash.com/photo-1569242840510-9fe6f0112cee?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1pbGl0YXJ5JTIwY29kfGVufDB8fDB8fHww",
+        "https://plus.unsplash.com/premium_photo-1661964069634-2f493e28a14c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWlsaXRhcnl8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1583872341575-610c859c7a57?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1pbGl0YXJ5fGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1689270063328-f05e85c3b968?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1pbGl0YXJ5Y29kJTIwZ2hvc3R8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1723131834395-9e26fa23fdb0?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fENvRCUyMEdob3N0fGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1699629151862-acbadd8cd8ed?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1pbGl0YXJ5JTIwdGFuayUyMGRhcmt8ZW58MHx8MHx8fDA%3D",
+        "https://images.unsplash.com/photo-1621364525332-f9c381f3bfe8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2FsbCUyMG9mJTIwZHV0eXxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1602901248692-06c8935adac0?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2FsbCUyMG9mJTIwZHV0eXxlbnwwfHwwfHx8MA%3D%3D"
+        
+        
     ]
 
     private static var militaryURLs: [URL] {
