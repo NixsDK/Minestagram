@@ -2,11 +2,28 @@
 //  AlbumPhoto.swift
 //  Minestagram
 //
+//  WHERE TO GET IMAGE URLS (paste into `militaryImageURLStrings` below)
+//  --------------------------------------------------------------------
+//  You need **direct** links: opening the URL in a browser should show *only* the image (or start a download).
+//
+//  • Unsplash — https://unsplash.com/s/photos/military
+//    Open a photo → right‑click the big image → **Open Image in New Tab** → copy the address bar
+//    (starts with `https://images.unsplash.com/photo-...`).
+//
+//  • Pexels — https://www.pexels.com/search/military/
+//    Open a photo → **Free download** (or right‑click image → **Copy image address**).
+//
+//  • Pixabay — https://pixabay.com/images/search/military/
+//    Similar: use the actual image file URL, not the gallery page.
+//
+//  Avoid Pinterest *idea* pages, Google Images search pages, etc. — those are HTML, not image files.
+//  Add one `"...",` line per image; the app cycles by JSONPlaceholder photo `id`.
+//
 
 import Foundation
 
 /// JSONPlaceholder album photo (grid + list source).
-/// **UI must use** `reliableImageURL` / `reliableThumbnailURL` for loading — not `url` / `thumbnailUrl`.
+/// **UI uses** `reliableImageURL` / `reliableThumbnailURL` — not `url` / `thumbnailUrl`.
 struct AlbumPhoto: Codable, Identifiable, Hashable {
     let albumId: Int
     let id: Int
@@ -22,31 +39,33 @@ struct AlbumPhoto: Codable, Identifiable, Hashable {
         case thumbnailUrl = "thumbnailUrl"
     }
 
-    /// JSONPlaceholder image URLs often fail on iOS. These Unsplash IDs are rotated for a military / tactical / aviation theme (profile grid + Photos tab).
-    private static let militaryUnsplashPhotoIDs = [
-        "1520106212299-d99c443e4568", // carrier deck / jets
-        "1544196958-34229ee680c0", // training / drill
-        "1519006112096-9051bfafc377", // helicopter
-        "1628177897482-3a0c0f04e709", // tactical / vehicle
-        "1588669636305-95af05eb51a1", // jet cockpit / aviation
-        "1509042239860-f550ce710b93", // field / ops mood
-        "1518709268805-72e911f0b6f4", // arid / deployment landscape
-        "1520106212299-d99c443e4568" // second slot from set for extra variation without risky IDs
+    /// Replace / extend these with your own direct image URLs (see file comment at top).
+    private static let militaryImageURLStrings: [String] = [
+        "https://images.unsplash.com/photo-1520106212299-d99c443e4568?fm=jpg&w=900&h=900&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1544196958-34229ee680c0?fm=jpg&w=900&h=900&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1519006112096-9051bfafc377?fm=jpg&w=900&h=900&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1628177897482-3a0c0f04e709?fm=jpg&w=900&h=900&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1588669636305-95af05eb51a1?fm=jpg&w=900&h=900&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1509042239860-f550ce710b93?fm=jpg&w=900&h=900&fit=crop&q=80"
     ]
 
-    private static func unsplashSquareURL(photoID: String, size: Int) -> URL {
-        // `auto=format` helps URLSession / AsyncImage on iOS; avoid relying on JSONPlaceholder `url` / `thumbnailUrl`.
-        let s = "https://images.unsplash.com/photo-\(photoID)?auto=format&w=\(size)&h=\(size)&fit=crop&q=85"
-        return URL(string: s)!
+    private static var militaryURLs: [URL] {
+        militaryImageURLStrings.compactMap {
+            let t = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+            return t.isEmpty ? nil : URL(string: t)
+        }
     }
 
+    /// Fallback if every string above is invalid (keeps the app usable while you fix URLs).
+    private static let fallbackPhotoURL = URL(string: "https://picsum.photos/900/900")!
+
     var reliableImageURL: URL {
-        let photoID = Self.militaryUnsplashPhotoIDs[abs(id) % Self.militaryUnsplashPhotoIDs.count]
-        return Self.unsplashSquareURL(photoID: photoID, size: 900)
+        let list = Self.militaryURLs
+        guard !list.isEmpty else { return Self.fallbackPhotoURL }
+        return list[abs(id) % list.count]
     }
 
     var reliableThumbnailURL: URL {
-        let photoID = Self.militaryUnsplashPhotoIDs[abs(id) % Self.militaryUnsplashPhotoIDs.count]
-        return Self.unsplashSquareURL(photoID: photoID, size: 320)
+        reliableImageURL
     }
 }
